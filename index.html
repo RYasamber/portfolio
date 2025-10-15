@@ -38,17 +38,9 @@
           <a href="#about">About</a>
         </li>
         <li>
-          <a href="#experience">Experience</a>
-        </li>
-        <li>
-          <a href="#education">Education</a>
-        </li>
-        <li>
           <a href="#projects">Projects</a>
         </li>
-        <li>
-          <a href="#skills">Skills</a>
-        </li>
+        <!-- Experience, Education and Skills links removed -->
         <li>
           <a href="#contact">Contact</a>
         </li>
@@ -59,8 +51,13 @@
     <div id="lead">
       <div id="lead-content">
         <h1>YASAMBER RAI</h1>
-        <h2>Freelance Copywriter | Aspiring Data Engineer</h2>
-        <a href="assets/MyCV.pdf" class="btn-rounded-white">Resume</a>
+        <h2 aria-live="polite">
+          <span id="lead-type" data-phrases='["Freelance Copywriter","Aspiring Data Engineer"]'></span>
+        </h2>
+        <a href="assets/MyCV.pdf" class="btn-rounded-white" download aria-label="Download Resume (PDF)" target="_blank" rel="noopener noreferrer">
+          <i class="fa fa-download" aria-hidden="true" style="margin-right:8px"></i>
+          Resume
+        </a>
       </div>
       <!-- End #lead-content -->
 
@@ -77,89 +74,19 @@
 
     <div id="about">
       <div class="container">
-        <div class="row">
-          <div class="col-md-4">
-            <h2 class="heading">About Me</h2>
-          </div>
-          <div class="col-md-8">
-            <p>
-              Hi! I'm <b>YASAMBER RAI</b>, a passionate and ambitious learner
-              from Nepal. I love taking on new challenges that push me to grow,
-              whether it's in tech, research or creative problem-solving.
-            </p>
-          </div>
+        <div class="about-panel">
+          <h2 class="heading">About Me</h2>
+          <p>
+            Hi! I'm <b>YASAMBER RAI</b>, a passionate and ambitious learner from
+            Nepal. I love taking on new challenges that push me to grow,
+            whether it's in tech, research or creative problem-solving.
+          </p>
         </div>
       </div>
     </div>
     <!-- End #about -->
 
-    <div id="experience" class="background-alt">
-      <h2 class="heading">Experience</h2>
-      <div id="experience-timeline">
-        <div data-date="May 2023 – December 2024">
-          <a href="">Rights Nepal</a>
-          <h4>Research Assistant</h4>
-          <h4>Responsibilities:</h4>
-          <ul>
-            <li>
-              Supported project leads and researchers by writing content,
-              gathering data and news, and maintaining smooth communication
-              within the team.
-            </li>
-            <li>
-              Stayed updated on both local and global affairs and provided
-              timely insights on Human Security and Digital Transformation in
-              Nepal.
-            </li>
-            <li>
-              Oversaw daily office operations and managed essential
-              administrative tasks.
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <!-- End #experience -->
-
-    <div id="education">
-      <h2 class="heading">Education</h2>
-
-      <div class="education-block">
-        <h3>Tribhuvan University</h3>
-        <span class="education-date"> 2025 - 2029</span>
-        <h4>Bachelor of Computer Engineering</h4>
-        <ul>
-          <li>
-            Studying core subjects like Accounting, Economics, and Business Law.
-          </li>
-          <li>
-            Learning practical business skills including financial analysis and
-            marketing strategies.
-          </li>
-          <li>
-            Developing communication, leadership, and problem-solving abilities
-            through team projects and case studies.
-          </li>
-        </ul>
-      </div>
-      <!-- End .education-block -->
-      <div class="education-block">
-        <h3>WorldQuant University</h3>
-        <span class="education-date">August 2023 - December 2023</span>
-        <h4>Applied Data Science</h4>
-        <p>
-          Completed eight end-to-end applied data science projects. Each project
-          involved accessing data from files, SQL and NoSQL databases, and APIs.
-          I explored and cleaned data, created functions and ETL pipelines to
-          prepare training sets, and built machine learning models for both
-          supervised and unsupervised learning tasks. I also created
-          visualizations to clearly explain data insights and model predictions
-          to non-technical audiences.
-        </p>
-      </div>
-      <!-- End .education-block -->
-    </div>
-    <!-- End #education -->
+    <!-- Experience, Education sections removed -->
 
     <div id="projects" class="background-alt">
       <h2 class="heading">Projects</h2>
@@ -210,18 +137,7 @@
     </div>
     <!-- End #projects -->
 
-    <div id="skills">
-      <h2 class="heading">Skills</h2>
-      <ul>
-        <li>JavaScript</li>
-        <li>Python</li>
-        <li>Pandas</li>
-        <li>Numpy</li>
-        <li>Matplotlib</li>
-        <li>Tensorflow</li>
-      </ul>
-    </div>
-    <!-- End #skills -->
+    <!-- Skills section removed -->
 
     <div id="contact">
       <h2>Get in Touch</h2>
@@ -292,6 +208,6 @@
     <!-- End footer -->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="js/scripts.min.js"></script>
+    <script src="js/scripts.js"></script>
   </body>
 </html>

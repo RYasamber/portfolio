@@ -219,16 +219,39 @@ footer {
 }
 .btn-rounded-white {
   display: inline-block;
-  color: #fff;
-  padding: 15px 25px;
-  border: 3px solid #fff;
-  border-radius: 30px;
-  transition: 0.5s ease all;
-}
-.btn-rounded-white:hover {
-  color: #3498db;
-  background: #fff;
+  color: #ffffff;
+  padding: 12px 28px;
+  border: 2px solid rgba(26, 188, 156, 0.95);
+  border-radius: 40px;
+  background: linear-gradient(135deg, #2bbbad 0%, #1f8fab 50%, #1776b6 100%);
+  box-shadow: 0 6px 18px rgba(23, 118, 182, 0.14);
+  /* Use explicit 3D transform and scale to avoid stutter on transition end */
+  transform: translate3d(0,6px,0) scale(1);
+  transform-origin: center center;
+  backface-visibility: hidden;
+  transition: transform 260ms cubic-bezier(.22,.8,.34,1), box-shadow 260ms ease, background 260ms ease, color 260ms ease;
+  will-change: transform, box-shadow, opacity;
   text-decoration: none;
+  font-weight: 600;
+  -webkit-font-smoothing:antialiased;
+}
+.btn-rounded-white:hover,
+.btn-rounded-white:focus {
+  color: #ffffff;
+  background: linear-gradient(135deg, #1f8fab 0%, #1776b6 100%);
+  /* Move up slightly from the base (6px -> 2px) and scale smoothly */
+  transform: translate3d(0,2px,0) scale(1.02);
+  box-shadow: 0 14px 36px rgba(23, 118, 182, 0.20);
+  text-decoration: none;
+  outline: none;
+}
+.btn-rounded-white:active {
+  transform: translate3d(0,7px,0) scale(0.995);
+  box-shadow: 0 6px 18px rgba(23,118,182,0.12);
+}
+.btn-rounded-white:focus-visible {
+  box-shadow: 0 8px 28px rgba(23,118,182,0.22);
+  border-color: rgba(23,118,182,0.95);
 }
 .shadow {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
@@ -286,10 +309,12 @@ footer {
 #lead-content {
   position: absolute;
   z-index: 10;
-  top: 50%;
+  top: 45%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate3d(-50%, -50%, 0);
   text-align: center;
+  will-change: transform, opacity;
+  -webkit-font-smoothing: antialiased;
 }
 #lead-content h1,
 #lead-content h2 {
@@ -302,12 +327,60 @@ footer {
   text-transform: uppercase;
   letter-spacing: 0.05em;
   line-height: 0.9em;
+  transform: translateZ(0);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  /* Promote to its own paint layer and contain paints to avoid reflow when sibling text changes */
+  will-change: transform, opacity;
+  contain: paint;
 }
 #lead-content h2 {
   color: #69e195;
-  font-weight: 500;
+  font-weight: 50;
   font-size: 1.45em;
   margin-bottom: 15px;
+  transform: translateZ(0);
+  will-change: transform;
+  -webkit-font-smoothing: antialiased;
+}
+/* Keep the h2 stable while the subtitle types: position relative and reserve height */
+#lead-content h2 {
+  position: relative;
+  min-height: 1.6em; /* reserve vertical space to avoid layout shift */
+}
+
+/* Typewriter styles */
+#lead-type {
+  display: inline-block;
+  /* absolutely position inside the h2 to isolate repaints from H1 */
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  min-width: 260px; /* reserve space to reduce layout shift */
+  white-space: nowrap;
+  overflow: hidden;
+  vertical-align: middle;
+  color: #69e195;
+}
+
+/* cursor as pseudo-element so it moves with text */
+#lead-type::after {
+  content: "|";
+  position: absolute;
+  right: -10px; /* small offset so it doesn't overlap clipped text */
+  color: #69e195;
+  opacity: 1;
+  animation: blink 700ms steps(1) infinite;
+}
+
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #lead-type::after { display: none; }
 }
  #lead-overlay {
   position: absolute;
@@ -337,7 +410,7 @@ footer {
   width: 35px;
   height: 35px;
   border-radius: 50%;
-  border: 3px solid #a0cfee;
+  border: 3px solid #d4eeff;
   text-align: center;
 }
 #lead-down i {
@@ -347,25 +420,88 @@ footer {
 }
 @keyframes pulsate {
   0% {
-    transform: scale(1, 1);
+    transform: scale(1);
   }
   50% {
-    transform: scale(1.2, 1.2);
+    transform: scale(1.12);
   }
   100% {
-    transform: scale(1, 1);
+    transform: scale(1);
   }
 }
 #about {
-  padding: 75px 15px;
-  border-bottom: 1px solid #dcd9d9;
+  /* Full viewport section with a dark moody background */
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  background: linear-gradient(180deg, #071026 0%, #061021 60%);
+  color: #69e195; /* default text color for the section */
 }
+
+/* A centered frosted/soft card to hold the About content */
+.about-panel {
+  max-width: 1000px;
+  width: 100%;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(105,225,149,0.08);
+  box-shadow: 0 10px 30px rgba(2,6,23,0.6);
+  padding: 68px;
+  border-radius: 12px;
+  backdrop-filter: blur(6px) saturate(120%);
+  -webkit-backdrop-filter: blur(6px) saturate(120%);
+  /* Nudge the panel slightly up inside the full-height about area */
+  transform: translateY(-18px);
+  transition: transform 280ms cubic-bezier(.22,.8,.34,1);
+}
+
 #about h2 {
-  color: #374054;
+  color: #69e195; /* match lead subtitle green */
+  margin-bottom: 18px;
 }
+
+/* Remove the decorative underline and center the heading inside the about panel */
+#about .heading {
+  display: block;
+  text-align: center;
+}
+/* remove the accent line for about heading specifically */
+#about .heading:after { display: none; }
+
 #about p {
-  color: #74808a;
-  margin: 0;
+  color: #9ef0b8; /* slightly lighter green for readability */
+  line-height: 1.7;
+  font-size: 1.05em;
+  margin: 0 0 8px 0;
+}
+
+/* Accent for bold text inside About */
+#about b {
+  color: #dfffe8;
+}
+
+/* Button/link styles inside about panel */
+.about-panel a {
+  color: #061428;
+  background: linear-gradient(135deg,#69e195 0%, #3ccf9e 100%);
+  padding: 10px 18px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 700;
+  display: inline-block;
+  margin-top: 12px;
+}
+
+@media only screen and (max-width: 992px) {
+  #about { padding: 60px 18px; }
+  .about-panel { padding: 30px; transform: translateY(-12px); }
+}
+
+@media only screen and (max-width: 480px) {
+  #about { padding: 40px 12px; }
+  .about-panel { padding: 20px; }
+  #about p { font-size: 0.98em; }
 }
 #experience {
   padding: 50px 15px;
@@ -397,7 +533,6 @@ footer {
   content: "";
   width: 3px;
   height: 40px;
-  background: #3498db;
   background: linear-gradient(to bottom, #3498db, rgba(52, 152, 219, 0));
   top: 100%;
   left: 303px;
@@ -753,8 +888,13 @@ footer {
   #lead-content a {
     padding: 10px 20px;
   }
-  #lead-down {
-    display: none;
+  #lead-content {
+    top: 45%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    /* Promote to its own layer to avoid repaint/stutter when child text changes */
+    will-change: transform, opacity;
+    -webkit-font-smoothing: antialiased;
   }
   .education-block h3,
   .education-block span {
@@ -786,11 +926,10 @@ footer {
   }
   #lead-content a {
     font-size: 0.9em;
-    padding: 5px 10px;
+    font-weight: 900;
   }
 }
 /* Original styles above... */
-
 /* === Enhancements Begin (non-destructive) === */
 
 /* Smooth Scroll */

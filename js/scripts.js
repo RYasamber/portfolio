@@ -90,4 +90,116 @@
       $("#more-projects").fadeIn(300);
     });
   });
+
+  // Hide/show lead-down button on scroll
+  var $leadDown = $("#lead-down");
+  var $lead = $("#lead");
+  function setLeadDownHidden(hidden) {
+    if (hidden) {
+      $leadDown.addClass("is-hidden");
+      $leadDown.attr("aria-hidden", "true");
+      // remove from keyboard order
+      $leadDown.find("span").attr("tabindex", "-1");
+    } else {
+      $leadDown.removeClass("is-hidden");
+      $leadDown.attr("aria-hidden", "false");
+      $leadDown.find("span").removeAttr("tabindex");
+    }
+  }
+
+  function checkLeadDownVisibility() {
+    // Hide when user scrolls past the hero or after a small scroll distance
+    var leadBottom = $lead.offset().top + $lead.outerHeight();
+    var scrolled = $(window).scrollTop();
+
+    var shouldHide = false;
+
+    if (scrolled > 140) {
+      shouldHide = true;
+    } else if (scrolled > 60 && scrolled >= leadBottom - 100) {
+      shouldHide = true;
+    }
+
+    setLeadDownHidden(shouldHide);
+  }
+
+  // Debounce utility
+  function debounce(fn, wait) {
+    var t;
+    return function () {
+      var ctx = this;
+      var args = arguments;
+      clearTimeout(t);
+      t = setTimeout(function () {
+        fn.apply(ctx, args);
+      }, wait);
+    };
+  }
+
+  var debouncedCheck = debounce(checkLeadDownVisibility, 80);
+
+  // Run on load and scroll (debounced)
+  $(window).on("scroll resize", debouncedCheck);
+  $(document).ready(checkLeadDownVisibility);
+
+  // Smooth Typewriter effect for lead subtitle
+  (function initTypewriter() {
+    var $typeEl = $("#lead-type");
+    if (!$typeEl.length) return;
+
+    // Respect prefers-reduced-motion
+    var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) {
+      $typeEl.text($typeEl.data("phrases").replace(/\[|\]|\"/g, "").split(',')[0] || "");
+      return;
+    }
+
+    var raw = $typeEl.attr("data-phrases") || "[]";
+    var phrases;
+    try {
+      phrases = JSON.parse(raw);
+    } catch (e) {
+      phrases = [raw];
+    }
+    if (!Array.isArray(phrases) || !phrases.length) return;
+
+    var i = 0;
+    var deleting = false;
+    var display = "";
+    var lastTime = 0;
+    var speed = 60; // ms per char (typing)
+    var pauseBetween = 1000; // pause at end
+
+    function tick() {
+      var phrase = phrases[i % phrases.length];
+      if (!deleting) {
+        display = phrase.slice(0, display.length + 1);
+        $typeEl.text(display);
+        if (display === phrase) {
+          // pause then start deleting
+          setTimeout(function () {
+            deleting = true;
+            requestAnimationFrame(tick);
+          }, pauseBetween);
+          return;
+        }
+      } else {
+        display = phrase.slice(0, display.length - 1);
+        $typeEl.text(display);
+        if (display.length === 0) {
+          deleting = false;
+          i++;
+        }
+      }
+      // randomize speed a little for natural feel
+      var variance = Math.round((Math.random() - 0.5) * 30);
+      setTimeout(function () {
+        requestAnimationFrame(tick);
+      }, Math.max(30, speed + variance));
+    }
+
+    // start
+    $typeEl.text("");
+    requestAnimationFrame(tick);
+  })();
 })(jQuery);
