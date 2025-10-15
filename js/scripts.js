@@ -44,7 +44,7 @@
     $("html, body").stop().scrollTop(scrollDistance);
   });
 
-  // Create timeline 
+  // Create timeline
   $("#experience-timeline").each(function () {
     $this = $(this);
     $userContent = $this.children("div");
@@ -73,17 +73,17 @@
     });
   });
 
-  // Open mobile menu 
+  // Open mobile menu
   $("#mobile-menu-open").click(function () {
     $("header, body").addClass("active");
   });
 
-  // Close mobile menu 
+  // Close mobile menu
   $("#mobile-menu-close").click(function () {
     $("header, body").removeClass("active");
   });
 
-  // Load additional projects 
+  // Load additional projects
   $("#view-more-projects").click(function (e) {
     e.preventDefault();
     $(this).fadeOut(300, function () {
@@ -150,7 +150,12 @@
     // Respect prefers-reduced-motion
     var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced) {
-      $typeEl.text($typeEl.data("phrases").replace(/\[|\]|\"/g, "").split(',')[0] || "");
+      $typeEl.text(
+        $typeEl
+          .data("phrases")
+          .replace(/\[|\]|\"/g, "")
+          .split(",")[0] || ""
+      );
       return;
     }
 
