@@ -226,32 +226,33 @@ footer {
   background: linear-gradient(135deg, #2bbbad 0%, #1f8fab 50%, #1776b6 100%);
   box-shadow: 0 6px 18px rgba(23, 118, 182, 0.14);
   /* Use explicit 3D transform and scale to avoid stutter on transition end */
-  transform: translate3d(0,6px,0) scale(1);
+  transform: translate3d(0, 6px, 0) scale(1);
   transform-origin: center center;
   backface-visibility: hidden;
-  transition: transform 260ms cubic-bezier(.22,.8,.34,1), box-shadow 260ms ease, background 260ms ease, color 260ms ease;
+  transition: transform 260ms cubic-bezier(0.22, 0.8, 0.34, 1),
+    box-shadow 260ms ease, background 260ms ease, color 260ms ease;
   will-change: transform, box-shadow, opacity;
   text-decoration: none;
   font-weight: 600;
-  -webkit-font-smoothing:antialiased;
+  -webkit-font-smoothing: antialiased;
 }
 .btn-rounded-white:hover,
 .btn-rounded-white:focus {
   color: #ffffff;
   background: linear-gradient(135deg, #1f8fab 0%, #1776b6 100%);
   /* Move up slightly from the base (6px -> 2px) and scale smoothly */
-  transform: translate3d(0,2px,0) scale(1.02);
-  box-shadow: 0 14px 36px rgba(23, 118, 182, 0.20);
+  transform: translate3d(0, 2px, 0) scale(1.02);
+  box-shadow: 0 14px 36px rgba(23, 118, 182, 0.2);
   text-decoration: none;
   outline: none;
 }
 .btn-rounded-white:active {
-  transform: translate3d(0,7px,0) scale(0.995);
-  box-shadow: 0 6px 18px rgba(23,118,182,0.12);
+  transform: translate3d(0, 7px, 0) scale(0.995);
+  box-shadow: 0 6px 18px rgba(23, 118, 182, 0.12);
 }
 .btn-rounded-white:focus-visible {
-  box-shadow: 0 8px 28px rgba(23,118,182,0.22);
-  border-color: rgba(23,118,182,0.95);
+  box-shadow: 0 8px 28px rgba(23, 118, 182, 0.22);
+  border-color: rgba(23, 118, 182, 0.95);
 }
 .shadow {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
@@ -375,14 +376,22 @@ footer {
 }
 
 @keyframes blink {
-  0%, 49% { opacity: 1; }
-  50%, 100% { opacity: 0; }
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  #lead-type::after { display: none; }
+  #lead-type::after {
+    display: none;
+  }
 }
- #lead-overlay {
+#lead-overlay {
   position: absolute;
   height: 100%;
   width: 100%;
@@ -431,29 +440,27 @@ footer {
 }
 #about {
   /* Full viewport section with a dark moody background */
-  min-height: 100vh;
+  min-height: 50vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 60px 20px;
   background: linear-gradient(180deg, #071026 0%, #061021 60%);
   color: #69e195; /* default text color for the section */
 }
 
 /* A centered frosted/soft card to hold the About content */
 .about-panel {
-  max-width: 1000px;
   width: 100%;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(105,225,149,0.08);
-  box-shadow: 0 10px 30px rgba(2,6,23,0.6);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(105, 225, 149, 0.08);
+  box-shadow: 0 10px 30px rgba(2, 6, 23, 0.6);
   padding: 68px;
   border-radius: 12px;
   backdrop-filter: blur(6px) saturate(120%);
   -webkit-backdrop-filter: blur(6px) saturate(120%);
   /* Nudge the panel slightly up inside the full-height about area */
   transform: translateY(-18px);
-  transition: transform 280ms cubic-bezier(.22,.8,.34,1);
+  transition: transform 280ms cubic-bezier(0.22, 0.8, 0.34, 1);
 }
 
 #about h2 {
@@ -467,7 +474,9 @@ footer {
   text-align: center;
 }
 /* remove the accent line for about heading specifically */
-#about .heading:after { display: none; }
+#about .heading:after {
+  display: none;
+}
 
 #about p {
   color: #9ef0b8; /* slightly lighter green for readability */
@@ -484,7 +493,7 @@ footer {
 /* Button/link styles inside about panel */
 .about-panel a {
   color: #061428;
-  background: linear-gradient(135deg,#69e195 0%, #3ccf9e 100%);
+  background: linear-gradient(135deg, #69e195 0%, #3ccf9e 100%);
   padding: 10px 18px;
   border-radius: 8px;
   text-decoration: none;
@@ -494,14 +503,25 @@ footer {
 }
 
 @media only screen and (max-width: 992px) {
-  #about { padding: 60px 18px; }
-  .about-panel { padding: 30px; transform: translateY(-12px); }
+  #about {
+    padding: 60px 18px;
+  }
+  .about-panel {
+    padding: 30px;
+    transform: translateY(-12px);
+  }
 }
 
 @media only screen and (max-width: 480px) {
-  #about { padding: 40px 12px; }
-  .about-panel { padding: 20px; }
-  #about p { font-size: 0.98em; }
+  #about {
+    padding: 40px 12px;
+  }
+  .about-panel {
+    padding: 20px;
+  }
+  #about p {
+    font-size: 0.98em;
+  }
 }
 #experience {
   padding: 50px 15px;
@@ -953,8 +973,17 @@ html {
 }
 
 /* Inherit font globally */
-body, p, h1, h2, h3, h4, h5, h6, a, button {
-  font-family: 'Inter', sans-serif;
+body,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+a,
+button {
+  font-family: "Inter", sans-serif;
 }
 
 /* Subtle Section Fade Effect */
@@ -970,7 +999,9 @@ body, p, h1, h2, h3, h4, h5, h6, a, button {
 }
 
 /* Soft Border on Cards/Images */
-.card, .project-item, img {
+.card,
+.project-item,
+img {
   border-radius: 12px;
   overflow: hidden;
 }
@@ -987,7 +1018,7 @@ footer a:hover {
 
 /* Techy Accent Line */
 .section-title::after {
-  content: '';
+  content: "";
   display: block;
   margin: 12px auto 0;
   width: 60px;
