@@ -17,19 +17,31 @@
 
   // INSTANT SCROLL when nav is clicked
   $("header a").click(function (e) {
+    var href = $(this).attr('href') || '';
+    // If it's not an internal anchor (starts with '#'), allow normal navigation
+    if (href.charAt(0) !== '#') {
+      // If mobile menu is open, close it but do not prevent navigation (so target=_blank works)
+      if ($('header').hasClass('active')) {
+        $('header, body, #menu').removeClass('active');
+      }
+      return; // allow default behavior for external links
+    }
+
     // Treat as normal link if no-scroll class
-    if ($(this).hasClass("no-scroll")) return;
+    if ($(this).hasClass('no-scroll')) return;
 
     e.preventDefault();
-    var heading = $(this).attr("href");
-    var scrollDistance = $(heading).offset().top;
-
-    // INSTANT SCROLL (no animation)
-    $("html, body").stop().scrollTop(scrollDistance);
+    var heading = href;
+    var $target = $(heading);
+    if ($target.length) {
+      var scrollDistance = $target.offset().top;
+      // INSTANT SCROLL (no animation)
+      $('html, body').stop().scrollTop(scrollDistance);
+    }
 
     // Hide the menu once clicked if mobile
-    if ($("header").hasClass("active")) {
-      $("header, body, #menu").removeClass("active");
+    if ($('header').hasClass('active')) {
+      $('header, body, #menu').removeClass('active');
     }
   });
 
@@ -218,11 +230,16 @@
     var speed = 60; // ms per char (typing)
     var pauseBetween = 1000; // pause at end
 
+    // Use a stable text node inside the element so pseudo-element cursor (::after)
+    // remains attached and doesn't get removed during element text replacement.
+    var textNode = document.createTextNode("");
+    $typeEl.empty().append(textNode);
+
     function tick() {
       var phrase = phrases[i % phrases.length];
       if (!deleting) {
         display = phrase.slice(0, display.length + 1);
-        $typeEl.text(display);
+        textNode.nodeValue = display;
         if (display === phrase) {
           // pause then start deleting
           setTimeout(function () {
@@ -233,7 +250,7 @@
         }
       } else {
         display = phrase.slice(0, display.length - 1);
-        $typeEl.text(display);
+        textNode.nodeValue = display;
         if (display.length === 0) {
           deleting = false;
           i++;
@@ -246,8 +263,8 @@
       }, Math.max(30, speed + variance));
     }
 
-    // start
-    $typeEl.text("");
+    // start — initialize the persistent text node and kick off the loop
+    textNode.nodeValue = "";
     requestAnimationFrame(tick);
   })();
 
