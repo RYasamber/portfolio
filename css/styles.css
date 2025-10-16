@@ -243,7 +243,7 @@ footer {
   text-decoration: none;
 }
 .btn-rounded-white:hover {
-  color: #73ff00;
+  color: #f4ffeb;
   background: linear-gradient(135deg, #38754d 0%, #0a8230 100%);
   /* Move up slightly from the base (16px -> 12px) and scale smoothly */
   transform: translate3d(0, 12px, 0) scale(1.02);
@@ -735,7 +735,7 @@ footer {
   top: 50%;
   transform: translateY(-50%);
   margin-left: 300px;
-  padding: 24px;
+  padding: 50px;
   color: #ffffff; /* ensure text is white on dark bg */
 }
 .project-info h3 {
@@ -766,6 +766,16 @@ footer {
 .btn-project:hover {
   transform: translateY(-3px);
   box-shadow: 0 16px 36px rgba(51, 201, 74, 0.18);
+}
+
+/* Ensure the View Project button never shows an underline */
+.btn-project,
+.btn-project:link,
+.btn-project:visited,
+.btn-project:active,
+.btn-project:hover,
+.btn-project:focus {
+  text-decoration: none;
 }
 
 /* Project images: add subtle border/overlay so they read on dark backgrounds */
@@ -916,7 +926,7 @@ footer .social a {
 #contact-form .btn-rounded-white.btn-send:hover {
   transform: translateY(9px);
   background: linear-gradient(135deg, #14521f 0%, #0c662f 50%, #2b934a 100%);
-  color: #08e783;
+  color: #e9fff5;
   box-shadow: 0 18px 40px rgba(34, 169, 54, 0.359);
 }
 .optional-section {
