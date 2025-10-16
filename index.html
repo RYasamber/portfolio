@@ -10,6 +10,8 @@
       href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900"
       rel="stylesheet"
     />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="libs/font-awesome/css/font-awesome.min.css" />
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/styles.css" rel="stylesheet" />
@@ -27,11 +29,8 @@
     </div>
     <!-- End #mobile-menu-toggle -->
     <header>
-      <div id="mobile-menu-close">
-        <span>Close</span> <i class="fa fa-times" aria-hidden="true"></i>
-      </div>
       <div class="logo">
-        <img src="assets/logo.gif" alt="Logo" />
+        <img src="assets/logo.png" alt="Logo" />
       </div>
       <ul id="menu" class="shadow">
         <li>
@@ -52,24 +51,10 @@
       <div id="lead-content">
         <h1>YASAMBER RAI</h1>
         <h2 aria-live="polite">
-          <span
-            id="lead-type"
-            data-phrases='["Freelance Copywriter","Aspiring Data Engineer"]'
-          ></span>
+          <span id="lead-type" data-phrases='["Freelance Copywriter","Aspiring Data Engineer"]'></span>
         </h2>
-        <a
-          href="assets/MyCV.pdf"
-          class="btn-rounded-white"
-          download
-          aria-label="Download Resume (PDF)"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <i
-            class="fa fa-download"
-            aria-hidden="true"
-            style="margin-right: 8px"
-          ></i>
+        <a href="assets/MyCV.pdf" class="btn-rounded-white" download aria-label="Download Resume (PDF)" target="_blank" rel="noopener noreferrer">
+          <i class="fa fa-download" aria-hidden="true" style="margin-right:8px"></i>
           Resume
         </a>
       </div>
@@ -82,6 +67,7 @@
           <i class="fa fa-chevron-down" aria-hidden="true"></i>
         </span>
       </div>
+      <!-- End #lead-down -->
     </div>
     <!-- End #lead -->
 
@@ -90,9 +76,9 @@
         <div class="about-panel">
           <h2 class="heading">About Me</h2>
           <p>
-            I'm a passionate and ambitious learner from Nepal. I love taking on
-            new challenges that push me to grow, whether it's in tech, research
-            or creative problem-solving.
+            <b>Hi!</b> I'm a passionate and ambitious learner from
+            Nepal. I love taking on new challenges that push me to grow,
+            whether it's in tech, research or creative problem-solving.
           </p>
         </div>
       </div>
@@ -119,7 +105,7 @@
                 screen sizes and features modern layout elements, including
                 Flexbox, Grid, and animations.
               </p>
-              <a href="">View Project</a>
+              <a href="" class="btn-project">View Project</a>
             </div>
             <!-- End .project-info -->
           </div>
@@ -140,7 +126,7 @@
                 accumulated during that turn, and their turn ends. The key is
                 deciding when to stop rolling and secure your points by holding.
               </p>
-              <a href="">View Project</a>
+              <a href="" class="btn-project">View Project</a>
             </div>
             <!-- End .project-info -->
           </div>
@@ -172,7 +158,7 @@
             placeholder="Your message"
             required
           ></textarea>
-          <button type="submit">Send</button>
+          <button type="submit" class="btn-rounded-white btn-send">Send</button>
         </form>
       </div>
       <!-- End #contact-form -->
