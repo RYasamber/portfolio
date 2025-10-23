@@ -292,4 +292,43 @@
     // Initialize header as visible
     $header.addClass('header-visible');
   })();
+
+  // Scroll to Top Button functionality
+  (function initScrollToTop() {
+    var $scrollBtn = $('#scroll-to-top');
+    var $window = $(window);
+    var showThreshold = 300; // Show button after scrolling 300px
+    
+    // Show/hide button based on scroll position
+    function toggleScrollButton() {
+      var scrollTop = $window.scrollTop();
+      
+      if (scrollTop > showThreshold) {
+        $scrollBtn.addClass('visible');
+      } else {
+        $scrollBtn.removeClass('visible');
+      }
+    }
+    
+    // Smooth scroll to top when button is clicked
+    $scrollBtn.on('click', function(e) {
+      e.preventDefault();
+      $('html, body').animate({
+        scrollTop: 0
+      }, 400, 'swing');
+    });
+    
+    // Handle scroll events with throttling for performance
+    var scrollTimeout;
+    $window.on('scroll', function() {
+      // Clear existing timeout
+      clearTimeout(scrollTimeout);
+      
+      // Set new timeout for smooth performance
+      scrollTimeout = setTimeout(toggleScrollButton, 10);
+    });
+    
+    // Initialize button state
+    toggleScrollButton();
+  })();
 })(jQuery);
