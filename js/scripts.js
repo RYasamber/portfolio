@@ -45,17 +45,6 @@
     }
   });
 
-  // INSTANT Scroll to top
-  $("#to-top").click(function () {
-    $("html, body").stop().scrollTop(0);
-  });
-
-  // INSTANT Scroll to first element
-  $("#lead-down span").click(function () {
-    var scrollDistance = $("#lead").next().offset().top;
-    $("html, body").stop().scrollTop(scrollDistance);
-  });
-
   // Create timeline
   $("#experience-timeline").each(function () {
     $this = $(this);
@@ -145,57 +134,6 @@
       $("#more-projects").fadeIn(300);
     });
   });
-
-  // Hide/show lead-down button on scroll
-  var $leadDown = $("#lead-down");
-  var $lead = $("#lead");
-  function setLeadDownHidden(hidden) {
-    if (hidden) {
-      $leadDown.addClass("is-hidden");
-      $leadDown.attr("aria-hidden", "true");
-      // remove from keyboard order
-      $leadDown.find("span").attr("tabindex", "-1");
-    } else {
-      $leadDown.removeClass("is-hidden");
-      $leadDown.attr("aria-hidden", "false");
-      $leadDown.find("span").removeAttr("tabindex");
-    }
-  }
-
-  function checkLeadDownVisibility() {
-    // Hide when user scrolls past the hero or after a small scroll distance
-    var leadBottom = $lead.offset().top + $lead.outerHeight();
-    var scrolled = $(window).scrollTop();
-
-    var shouldHide = false;
-
-    if (scrolled > 140) {
-      shouldHide = true;
-    } else if (scrolled > 60 && scrolled >= leadBottom - 100) {
-      shouldHide = true;
-    }
-
-    setLeadDownHidden(shouldHide);
-  }
-
-  // Debounce utility
-  function debounce(fn, wait) {
-    var t;
-    return function () {
-      var ctx = this;
-      var args = arguments;
-      clearTimeout(t);
-      t = setTimeout(function () {
-        fn.apply(ctx, args);
-      }, wait);
-    };
-  }
-
-  var debouncedCheck = debounce(checkLeadDownVisibility, 80);
-
-  // Run on load and scroll (debounced)
-  $(window).on("scroll resize", debouncedCheck);
-  $(document).ready(checkLeadDownVisibility);
 
   // Smooth Typewriter effect for lead subtitle
   (function initTypewriter() {
@@ -293,5 +231,65 @@
         }, 10);
       });
     });
+  })();
+
+  // Header hide/show on scroll (YouTube-style)
+  (function initScrollHeader() {
+    var $header = $('header');
+    var lastScrollTop = 0;
+    var delta = 5; // minimum scroll distance to trigger hide/show
+    var navbarHeight = $header.outerHeight();
+    var didScroll = false;
+
+    // Track scroll events
+    $(window).scroll(function() {
+      didScroll = true;
+    });
+
+    // Check scroll direction every 250ms
+    setInterval(function() {
+      if (didScroll) {
+        hasScrolled();
+        didScroll = false;
+      }
+    }, 250);
+
+    function hasScrolled() {
+      var scrollTop = $(window).scrollTop();
+      
+      // Debug logging
+      console.log('Scroll Top:', scrollTop, 'Last Scroll:', lastScrollTop, 'Delta:', Math.abs(lastScrollTop - scrollTop));
+      
+      // Make sure they scroll more than delta
+      if (Math.abs(lastScrollTop - scrollTop) <= delta) {
+        return;
+      }
+      
+      // If at top of page, always show header
+      if (scrollTop <= navbarHeight) {
+        console.log('At top - showing header');
+        $header.removeClass('header-hidden').addClass('header-visible');
+        lastScrollTop = scrollTop;
+        return;
+      }
+      
+      // If scrolling down and past the navbar, hide
+      if (scrollTop > lastScrollTop && scrollTop > navbarHeight) {
+        // Scrolling Down - Hide header
+        console.log('Scrolling down - hiding header');
+        $header.removeClass('header-visible').addClass('header-hidden');
+      } else {
+        // Scrolling Up - Show header
+        console.log('Scrolling up - showing header');
+        if (scrollTop + $(window).height() < $(document).height()) {
+          $header.removeClass('header-hidden').addClass('header-visible');
+        }
+      }
+      
+      lastScrollTop = scrollTop;
+    }
+
+    // Initialize header as visible
+    $header.addClass('header-visible');
   })();
 })(jQuery);
