@@ -1025,10 +1025,7 @@ footer .social a {
     right: 0;
     height: 64px;
     z-index: 1001;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 12px;
+    display: block; /* Change from flex to block since logo is absolutely positioned */
     background: rgba(6,16,36,0.86);
     -webkit-backdrop-filter: blur(6px);
     backdrop-filter: blur(6px);
@@ -1045,9 +1042,17 @@ footer .social a {
     border-bottom-left-radius: 4px;
   }
 
+  .logo {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1002;
+  }
+
   .logo img {
     height: 44px;
-    padding-left: 6px;
+    padding-left: 0; /* Remove padding since we're using absolute positioning */
   }
 
   /* Hamburger toggle visible */
@@ -1133,7 +1138,7 @@ footer .social a {
 
   /* Small layout tweaks for hero so it doesn't hide under the header */
   #lead {
-    padding-top: 72px;
+    padding-top: 120px; /* Increased from 72px to give more space */
   }
 
   /* Hide project images on small screens */
@@ -1197,6 +1202,11 @@ footer .social a {
   }
 }
 @media only screen and (max-width: 480px) {
+  /* Extra spacing for very small screens */
+  #lead {
+    padding-top: 140px; /* Even more space on very small screens */
+  }
+  
   #lead-content h1 {
     font-size: 1.5em;
   }
