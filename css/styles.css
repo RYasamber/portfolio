@@ -15,6 +15,31 @@ body {
   background: #041018; /* dark fallback to avoid white gaps during reflow */
   overflow-x: hidden; /* prevent horizontal white gaps on small screens */
 }
+
+/* Design tokens */
+:root {
+  /* colors */
+  --bg: #041018;
+  --bg-soft: #061021;
+  --text: #e7f2ed;
+  --muted: #9fbfb0;
+  --accent: #69e195;
+  --accent-contrast: #061428;
+  --card-bg: rgba(255, 255, 255, 0.03);
+  --card-border: rgba(255, 255, 255, 0.06);
+  /* spacing scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  /* radii */
+  --radius-1: 8px;
+  --radius-2: 12px;
+}
 body.active {
   overflow: hidden;
 }
@@ -171,10 +196,12 @@ header.header-visible {
   padding: 0 7px;
   border-radius: 4px;
   background: #fff;
+  border: none; /* reset default button border */
 }
 /* close control removed - styles intentionally omitted */
 footer {
-  padding: 50px 0;
+  padding: 80px 0 70px; /* more breathing room */
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 .copyright {
   padding-top: 20px;
@@ -187,7 +214,7 @@ footer {
   text-align: right;
 }
 .social ul {
-  margin: 5px 0 0 0;
+  margin: 12px 0 0 0; /* lower icons slightly for balance */
   padding: 0;
 }
 .social li {
@@ -292,7 +319,7 @@ footer {
   left: 0;
   right: 0;
   margin: 0 auto;
-  background: #3498db;
+  background: var(--accent);
 }
 .background-alt {
   background: #f2f2f5;
@@ -475,7 +502,7 @@ footer {
 #about p {
   color: #9ef0b8; /* slightly lighter green for readability */
   line-height: 1.7;
-  text-align: center;
+  text-align: left;
   font-size: 1.05em;
   margin: 0 0 8px 0;
 }
@@ -497,6 +524,47 @@ footer {
   margin-top: 12px;
 }
 
+/* About content with avatar */
+.about-content {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: var(--space-6);
+  align-items: center;
+  margin-top: var(--space-6);
+}
+
+.about-avatar {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  padding: 4px; /* ring thickness */
+  background: conic-gradient(from 180deg at 50% 50%, rgba(105,225,149,0.35), rgba(255,255,255,0.08), rgba(105,225,149,0.35));
+  box-shadow: 0 12px 36px rgba(2,6,23,0.65), inset 0 0 0 1px rgba(255,255,255,0.06);
+  position: relative;
+}
+
+.about-avatar::after {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border-radius: 50%;
+  background: radial-gradient(120% 120% at 0% 0%, rgba(255,255,255,0.06), rgba(255,255,255,0));
+  pointer-events: none;
+}
+
+.about-avatar img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border-radius: 50%;
+  object-fit: cover;
+  background: linear-gradient(180deg, #0a1a24, #0d1f2a);
+}
+
+.about-text {
+  text-align: left;
+}
+
 @media only screen and (max-width: 992px) {
   #about {
     padding: 60px 18px;
@@ -504,6 +572,19 @@ footer {
   .about-panel {
     padding: 30px;
     transform: translateY(-12px);
+  }
+  .about-content {
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+    text-align: center;
+  }
+  .about-avatar {
+    width: 160px;
+    height: 160px;
+    margin: 0 auto;
+  }
+  .about-text {
+    text-align: center;
   }
 }
 
@@ -516,6 +597,10 @@ footer {
   }
   #about p {
     font-size: 0.98em;
+  }
+  .about-avatar {
+    width: 140px;
+    height: 140px;
   }
 }
 #experience {
@@ -674,28 +759,30 @@ footer {
   margin: 6px auto 0; /* tightened spacing */
   width: 60px;
   height: 4px;
-  background: #ffffff; /* white underline */
+  background: #ffffff; /* keep white underline for contrast in dark section */
   border-radius: 2px;
 }
 .project {
   position: relative;
-  max-width: 920px;
+  max-width: 960px;
   margin: 0 auto 30px auto;
   overflow: hidden;
-  background: rgba(255,255,255,0.03);
+  background: var(--card-bg);
   border: 1px solid rgba(255,255,255,0.04);
-  border-radius: 8px;
+  border-radius: var(--radius-1);
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: var(--space-5);
+  align-items: stretch;
 }
 .project-image {
-  float: left;
-  padding: 18px;
+  padding: var(--space-4);
 }
 .project-info {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  margin-left: 300px;
-  padding: 50px;
+  position: static;
+  transform: none;
+  margin-left: 0;
+  padding: var(--space-6) var(--space-7) var(--space-6) 0;
   color: #ffffff; /* ensure text is white on dark bg */
 }
 .project-info h3 {
@@ -730,25 +817,17 @@ footer {
   box-shadow: 0 16px 36px rgba(51, 201, 74, 0.18);
 }
 
+
 .project {
-  position: relative;
-  max-width: 920px;
-  margin: 0 auto 30px auto;
-  overflow: hidden;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.04);
-  border-radius: 8px;
   transition: all 200ms ease;
   cursor: pointer;
 }
 
 .project-info {
-  position: absolute;
-  top: 44%;
-  transform: translateY(-50%);
-  margin-left: 300px;
-  padding: 50px;
-  color: #ffffff;
+  position: static;
+  top: auto;
+  transform: none;
+  margin-left: 0;
   padding-right: 80px; /* Space for arrow */
 }
 
@@ -786,11 +865,38 @@ footer {
 /* Project images: add subtle border/overlay so they read on dark backgrounds */
 .project-image img {
   display: block;
-  max-width: 300px;
+  width: 100%;
   height: auto;
-  border-radius: 8px;
-  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--radius-1);
+  border: 1px solid var(--card-border);
   box-shadow: 0 6px 18px rgba(2,6,23,0.6);
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+/* Tech badges */
+.tech-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 10px 0 0 0;
+  padding: 0;
+  list-style: none;
+}
+.tech-badges li {
+  padding: 6px 10px;
+  font-size: 0.85em;
+  color: #ffffff;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 999px;
+}
+
+.project-cta {
+  margin-top: 12px;
+  font-weight: 600;
+  color: var(--accent);
+  opacity: 0.95;
 }
 
 /* Ensure regular links and icons inside dark sections remain visible */
@@ -1015,6 +1121,18 @@ footer .social a {
   #about p {
     text-align: left;
   }
+
+  /* Stack project content on tablet/mobile */
+  .project {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+  .project-image {
+    padding: var(--space-3) var(--space-3) 0 var(--space-3);
+  }
+  .project-info {
+    padding: var(--space-4) var(--space-4) var(--space-5) var(--space-3);
+  }
 }
 @media only screen and (max-width: 768px) {
   /* Mobile: compact fixed header with right hamburger */
@@ -1067,6 +1185,13 @@ footer .social a {
     border-radius: 6px;
     padding: 6px 8px;
     font-size: 1.35em;
+    border: none; /* reset default button border */
+  }
+
+  #mobile-menu-open:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(105, 225, 149, 0.22);
+    border-radius: 8px;
   }
 
   /* Sidebar menu: size to content with a max-height cap */
@@ -1145,30 +1270,21 @@ footer .social a {
   /* On mobile, stack project content: show image full-width and position info below it */
   .project-image {
     display: block;
-    float: none;
     width: 100%;
-    padding: 0 0 12px 0;
+    padding: 0;
   }
   .project-image img {
     max-width: 100%;
     height: auto;
     display: block;
-    border-radius: 8px;
+    border-radius: var(--radius-1);
   }
 
-  /* Make project-info flow under the image instead of absolute positioned */
   .project {
-    position: relative;
-    padding: 12px 12px 18px 12px;
     margin-bottom: 18px;
   }
   .project-info {
-    position: static;
-    transform: none;
-    margin-left: 0;
-    padding: 0;
-    padding-right: 50px; /* Space for mobile arrow */
-    top: auto;
+    padding: var(--space-4) var(--space-5) var(--space-5) var(--space-4);
     color: #ffffff;
   }
   .project-info h3 {
@@ -1242,17 +1358,20 @@ html {
 }
 
 /* Inherit font globally */
-body,
-p,
+/* Keep body text on Lato (already loaded) and use Playfair for headings */
 h1,
 h2,
 h3,
 h4,
 h5,
-h6,
-a,
-button {
-  font-family: "Inter", sans-serif;
+h6 {
+  font-family: "Playfair Display", serif;
+  font-weight: 600;
+}
+
+/* Optional: slightly tighter tracking for big headings */
+#lead-content h1 {
+  letter-spacing: 0.04em;
 }
 
 /* Subtle Section Fade Effect */
@@ -1293,6 +1412,13 @@ footer .social a:hover,
 footer .social a:focus {
   color: #69e195;
   transform: translateY(-3px);
+}
+
+/* Visible keyboard focus for footer links */
+footer .social a:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(105, 225, 149, 0.18);
+  border-radius: 6px;
 }
 
 /* Techy Accent Line */
@@ -1372,3 +1498,10 @@ footer .social a:focus {
 }
 
 /* === Enhancements End === */
+
+/* Offset in-page anchors to account for fixed header height for smooth scrolling */
+#about,
+#projects,
+#contact {
+  scroll-margin-top: 90px;
+}

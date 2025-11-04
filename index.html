@@ -12,6 +12,19 @@
     />
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Open Graph / Twitter Meta -->
+    <meta property="og:title" content="Yasamber Rai – Portfolio" />
+    <meta property="og:description" content="Aspiring Data Engineer and Freelance Copywriter. Explore projects, skills, and ways to get in touch." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://your-domain.example.com/" />
+    <meta property="og:image" content="images/og-image.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Yasamber Rai – Portfolio" />
+    <meta name="twitter:description" content="Aspiring Data Engineer and Freelance Copywriter. Explore projects, skills, and ways to get in touch." />
+    <meta name="twitter:image" content="images/og-image.jpg" />
     <link rel="stylesheet" href="libs/font-awesome/css/font-awesome.min.css" />
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/styles.css" rel="stylesheet" />
@@ -24,14 +37,15 @@
         Your browser does not support the video tag.
       </video>
     </div>
-    <div id="mobile-menu-open" class="shadow-large">
+    <button id="mobile-menu-open" class="shadow-large" aria-label="Open menu" aria-controls="menu" aria-expanded="false">
       <i class="fa fa-bars" aria-hidden="true"></i>
-    </div>
+    </button>
     <!-- End #mobile-menu-toggle -->
     <header>
       <div class="logo">
         <img src="assets/logo.png" alt="Logo" />
       </div>
+      <nav aria-label="Primary">
       <ul id="menu" class="shadow">
         <li>
           <a href="#about">About</a>
@@ -47,6 +61,7 @@
           <a href="https://medium.com/@yasamber05" target="_blank" rel="noopener noreferrer">Blog</a>
         </li>
       </ul>
+      </nav>
     </header>
     <!-- End header -->
 
@@ -71,11 +86,16 @@
       <div class="container">
         <div class="about-panel">
           <h2 class="heading">About Me</h2>
-          <p>
-            <b>Hi!</b> I'm a passionate and ambitious learner from
-            Nepal. I love taking on new challenges that push me to grow,
-            whether it's in tech, research or creative problem-solving.
-          </p>
+          <div class="about-content">
+            <div class="about-avatar" aria-hidden="false">
+              <img src="images/Me.jpg" alt="Portrait of Yasamber Rai" loading="lazy" decoding="async" />
+            </div>
+            <div class="about-text">
+              <p>
+                <b>Hi!</b> I'm a passionate and ambitious learner from Nepal. I love taking on new challenges that push me to grow, whether it's in tech, research or creative problem-solving.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -90,7 +110,7 @@
           <a href="https://github.com/RYasamber/Visa-Prep-Tool.git" class="project-card" target="_blank" rel="noopener noreferrer">
             <div class="project shadow-large">
               <div class="project-image">
-                <img src="images/Visa.jpg" />
+                <img src="images/Visa.jpg" alt="Visa Prep Tool cover image" loading="lazy" decoding="async" />
               </div>
               <!-- End .project-image -->
               <div class="project-info">
@@ -98,6 +118,12 @@
                 <p>
                 Visa Interview Prep App is a Python command-line tool that helps users practice visa interview questions. Built as the final project for CS50’s Introduction to Programming with Python, it lets users answer questions, view model responses, and add their own using a JSON file. It’s an interactive, offline, and customizable way to prepare confidently for interviews.
                 </p>
+                <ul class="tech-badges">
+                  <li>Python</li>
+                  <li>JSON</li>
+                  <li>CLI</li>
+                </ul>
+                <div class="project-cta">View on GitHub ↗</div>
                 <div class="project-arrow">
                   <span>↗</span>
                 </div>
@@ -110,7 +136,7 @@
           <a href="https://github.com/RYasamber/Library-Management_System.git" class="project-card" target="_blank" rel="noopener noreferrer">
             <div class="project shadow-large">
               <div class="project-image">
-                <img src="images/Library.jpg" />
+                <img src="images/Library.jpg" alt="Library Management System cover image" loading="lazy" decoding="async" />
               </div>
               <!-- End .project-image -->
               <div class="project-info">
@@ -118,6 +144,12 @@
                 <p>
                   This Library Management System database is a lightweight yet powerful backend for handling core library operations. It can be used in academic settings, small community libraries, or as a foundation for more complex library software solutions.
                 </p>
+                <ul class="tech-badges">
+                  <li>SQL</li>
+                  <li>Database Design</li>
+                  <li>ERD</li>
+                </ul>
+                <div class="project-cta">View on GitHub ↗</div>
                 <div class="project-arrow">
                   <span>↗</span>
                 </div>
@@ -171,7 +203,7 @@
           <div class="col-sm-7 social">
             <ul>
               <li>
-                <a href="https://github.com/RYasamber" target="_blank"
+                <a href="https://github.com/RYasamber" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile"
                   ><i class="fa fa-github" aria-hidden="true"></i
                 ></a>
               </li>
@@ -179,13 +211,13 @@
               <li>
                 <a
                   href="https://www.linkedin.com/in/yasamber-rai/"
-                  target="_blank"
+                  target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile"
                   ><i class="fa fa-linkedin" aria-hidden="true"></i
                 ></a>
               </li>
 
               <li>
-                <a href="https://x.com/Yasamber_" target="_blank"
+                <a href="https://x.com/Yasamber_" target="_blank" rel="noopener noreferrer" aria-label="Twitter profile"
                   ><i class="fa fa-twitter" aria-hidden="true"></i
                 ></a>
               </li>
