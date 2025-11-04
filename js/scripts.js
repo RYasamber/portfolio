@@ -15,7 +15,7 @@
   // Remove no-js class
   $("html").removeClass("no-js");
 
-  // INSTANT SCROLL when nav is clicked
+  // Let native smooth scroll handle in-page anchors; close mobile menu when used
   $("header a").click(function (e) {
     var href = $(this).attr('href') || '';
     // If it's not an internal anchor (starts with '#'), allow normal navigation
@@ -30,19 +30,11 @@
     // Treat as normal link if no-scroll class
     if ($(this).hasClass('no-scroll')) return;
 
-    e.preventDefault();
-    var heading = href;
-    var $target = $(heading);
-    if ($target.length) {
-      var scrollDistance = $target.offset().top;
-      // INSTANT SCROLL (no animation)
-      $('html, body').stop().scrollTop(scrollDistance);
-    }
-
     // Hide the menu once clicked if mobile
     if ($('header').hasClass('active')) {
       $('header, body, #menu').removeClass('active');
     }
+    // Allow browser's default smooth behavior to handle the scroll
   });
 
   // Create timeline
@@ -237,7 +229,7 @@
   (function initScrollHeader() {
     var $header = $('header');
     var lastScrollTop = 0;
-    var delta = 5; // minimum scroll distance to trigger hide/show
+    var delta = 10; // minimum scroll distance to trigger hide/show (reduce jitter)
     var navbarHeight = $header.outerHeight();
     var didScroll = false;
 
@@ -257,9 +249,6 @@
     function hasScrolled() {
       var scrollTop = $(window).scrollTop();
       
-      // Debug logging
-      console.log('Scroll Top:', scrollTop, 'Last Scroll:', lastScrollTop, 'Delta:', Math.abs(lastScrollTop - scrollTop));
-      
       // Make sure they scroll more than delta
       if (Math.abs(lastScrollTop - scrollTop) <= delta) {
         return;
@@ -267,7 +256,6 @@
       
       // If at top of page, always show header
       if (scrollTop <= navbarHeight) {
-        console.log('At top - showing header');
         $header.removeClass('header-hidden').addClass('header-visible');
         lastScrollTop = scrollTop;
         return;
@@ -276,11 +264,9 @@
       // If scrolling down and past the navbar, hide
       if (scrollTop > lastScrollTop && scrollTop > navbarHeight) {
         // Scrolling Down - Hide header
-        console.log('Scrolling down - hiding header');
         $header.removeClass('header-visible').addClass('header-hidden');
       } else {
         // Scrolling Up - Show header
-        console.log('Scrolling up - showing header');
         if (scrollTop + $(window).height() < $(document).height()) {
           $header.removeClass('header-hidden').addClass('header-visible');
         }
@@ -330,5 +316,26 @@
     
     // Initialize button state
     toggleScrollButton();
+  })();
+
+  // Respect reduced motion for background video
+  (function manageBackgroundVideo() {
+    var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    var video = document.querySelector('.video-background video');
+    if (!video) return;
+
+    function updatePlayback() {
+      if (prefersReducedMotion.matches) {
+        try {
+          video.pause();
+          video.removeAttribute('autoplay');
+        } catch (e) {}
+      }
+    }
+
+    updatePlayback();
+    if (prefersReducedMotion.addEventListener) {
+      prefersReducedMotion.addEventListener('change', updatePlayback);
+    }
   })();
 })(jQuery);
