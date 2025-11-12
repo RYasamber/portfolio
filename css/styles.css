@@ -346,6 +346,47 @@ footer {
   object-fit: cover;
   width: 100vw;
   height: 100vh;
+  /* Bloom base: soft blur + slight brightness/saturation boost */
+  filter: blur(4px) brightness(1.03) saturate(1.04);
+  -webkit-filter: blur(4px) brightness(1.03) saturate(1.04);
+  /* Scale up subtly to avoid seeing blur edges on some viewports */
+  transform: scale(1.03);
+  will-change: filter, transform;
+}
+
+/* Bloom glow overlay: subtle radial light and a vignette for depth */
+.video-background::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  /* Combine a central soft light with a gentle edge vignette */
+  background:
+    radial-gradient(60% 60% at 50% 45%, rgba(255,255,255,0.12), rgba(255,255,255,0.02) 60%, rgba(0,0,0,0) 100%),
+    radial-gradient(100% 100% at 50% 50%, rgba(0,0,0,0) 60%, rgba(0,0,0,0.25) 100%);
+  mix-blend-mode: screen; /* soft bloom-like lift on highlights */
+  opacity: 0.6;
+}
+
+@media (max-width: 768px) {
+  .video-background video {
+    /* Lighter blur on mobile for performance/readability */
+    filter: blur(3px) brightness(1.02) saturate(1.03);
+    -webkit-filter: blur(3px) brightness(1.02) saturate(1.03);
+    transform: scale(1.02);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .video-background video {
+    /* Keep minimal processing when user prefers reduced motion/effects */
+    filter: blur(2px) brightness(1.01) saturate(1.01);
+    -webkit-filter: blur(2px) brightness(1.01) saturate(1.01);
+    transform: scale(1.01);
+  }
+  .video-background::after {
+    opacity: 0.32;
+  }
 }
 
 #lead-content {
